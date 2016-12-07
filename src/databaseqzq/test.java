@@ -1,8 +1,7 @@
 package databaseqzq;
 
 import java.sql.*;
-
-
+import java.util.ArrayList;
 public class test {
 
 	private static Connection getConn() {
@@ -21,7 +20,7 @@ public class test {
 	    }
 	    return conn;
 	}
-	private static int proinsert(String proname,int course_id,Timestamp start_time,Timestamp end_time) {
+	private static int proInsert(String proname,int course_id,Timestamp start_time,Timestamp end_time) {
 	    Connection conn = getConn();
 	    System.out.println("insert problem");
 	    int i = 0, pro_id = 0;
@@ -55,10 +54,13 @@ public class test {
 	    }
 	    return i;
 	}
-	private static int proupdate(String proname,Timestamp start_time,Timestamp end_time,String pre_proname) {
+	
+	private static int proUpdate(ProblemAbstract problem) {
 	    Connection conn = getConn();
 	    int i = 0;
-	    String sql = "update problem set proname='" + proname + "',start_time ='" + start_time + "',end_time='" + end_time + "' where proname ='" + pre_proname + "'";
+	    String sql = "update problem set proname='" + problem.getProName() + 
+	    		"',start_time ='" + problem.getStartTime() + "',end_time='" + problem.getEndTime() + 
+	    		"' where pro_id ='" + problem.getProID() + "'";
 	    PreparedStatement pstmt;
 	    try {
 	        pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -71,7 +73,49 @@ public class test {
 	    }
 	    return i;
 	}
-	private static int prodelete(String proname) {
+	
+	private static ProblemAbstract proSearch(int pro_id){
+		 Connection conn = getConn();
+		 String sql = "select * from problem where pro_id ='" + pro_id + "'";
+		 PreparedStatement pstmt;
+		 try {
+		        pstmt = conn.prepareStatement(sql);
+		        ResultSet rs = pstmt.executeQuery();
+		        if(rs.next()){
+		        		ProblemAbstract problem = new ProblemAbstract(rs.getInt(1),rs.getString(2),rs.getInt(3),time2string(rs.getTimestamp(4)),time2string(rs.getTimestamp(5)));
+		        		pstmt.close();
+		        		return problem;
+		        }
+		//        System.out.print(pro_id);
+		    }catch (SQLException e) {
+		        e.printStackTrace();
+		        
+		    }
+		 return null;
+	}
+	
+	private static ArrayList<ProblemAbstract> searchMyProblem(int user_id){
+		 Connection conn = getConn();
+		 String sql = "select * from problem where course_id in (select course_id from study where user_id = '" + user_id + "')";
+		 PreparedStatement pstmt;
+		 try {
+		        pstmt = conn.prepareStatement(sql);
+		        ResultSet rs = pstmt.executeQuery();
+		        ArrayList<ProblemAbstract> prolist = new ArrayList<ProblemAbstract>();
+		        while(rs.next()){
+		        	ProblemAbstract problem = new ProblemAbstract(rs.getInt(1),rs.getString(2),rs.getInt(3),time2string(rs.getTimestamp(4)),time2string(rs.getTimestamp(5)));
+		        	prolist.add(problem);
+		        }
+		        pstmt.close();
+		        return prolist;
+		 }catch (SQLException e) {
+		        e.printStackTrace();
+		        
+		 }
+		 return null;
+	}
+	
+	private static int proDelete(String proname) {
 	    Connection conn = getConn();
 	    int i = 0;
 	    String sql = "delete from problem where proname='" + proname + "'";
@@ -87,7 +131,7 @@ public class test {
 	    }
 	    return i;
 	}
-	private static int solinsert(int user_id,int pro_id,String result,double time,double memory,int grade,Timestamp submit_time) {
+	private static int solInsert(int user_id,int pro_id,String result,double time,double memory,int grade,Timestamp submit_time) {
 	    Connection conn = getConn();
 	    System.out.println("insert solution");
 	    int i = 0, sol_id = 0;
@@ -124,16 +168,85 @@ public class test {
 	    }
 	    return i;
 	}
+	public static JudgeResult solSearch(int sol_id){
+		 Connection conn = getConn();
+		 String sql = "select * from solution where sol_id ='" + sol_id + "'";
+		 PreparedStatement pstmt;
+		 try {
+		        pstmt = conn.prepareStatement(sql);
+		        ResultSet rs = pstmt.executeQuery();
+		        if(rs.next()){
+		        		JudgeResult solution = new JudgeResult(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getDouble(5),rs.getDouble(6),rs.getInt(7),time2string(rs.getTimestamp(8)));
+		        		pstmt.close();
+		        		return solution;
+		        }
+		//        System.out.print(pro_id);
+		    }catch (SQLException e) {
+		        e.printStackTrace();
+		        
+		    }
+		 return null;
+	}
+	private static ArrayList<JudgeResult> searchMySolution(int user_id){
+		 Connection conn = getConn();
+		 String sql = "select * from solution where user_id ='" + user_id + "'";		 
+		 PreparedStatement pstmt;
+		 try {
+		        pstmt = conn.prepareStatement(sql);
+		        ResultSet rs = pstmt.executeQuery();
+		        ArrayList<JudgeResult> sollist = new ArrayList<JudgeResult>();
+		        while(rs.next()){
+	        		JudgeResult solution = new JudgeResult(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getDouble(5),rs.getDouble(6),rs.getInt(7),time2string(rs.getTimestamp(8)));
+		        	sollist.add(solution);
+		        }
+		        pstmt.close();
+		        return sollist;
+		 }catch (SQLException e) {
+		        e.printStackTrace();
+		        
+		 }
+		 return null;
+	}
+	private static ArrayList<JudgeResult> searchAllSolution(int pro_id){
+		 Connection conn = getConn();
+		 String sql = "select * from solution where pro_id ='" + pro_id + "'";		 
+		 PreparedStatement pstmt;
+		 try {
+		        pstmt = conn.prepareStatement(sql);
+		        ResultSet rs = pstmt.executeQuery();
+		        ArrayList<JudgeResult> sollist = new ArrayList<JudgeResult>();
+		        while(rs.next()){
+	        		JudgeResult solution = new JudgeResult(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getDouble(5),rs.getDouble(6),rs.getInt(7),time2string(rs.getTimestamp(8)));
+		        	sollist.add(solution);
+		        }
+		        pstmt.close();
+		        return sollist;
+		 }catch (SQLException e) {
+		        e.printStackTrace();
+		 }
+		 return null;
+	}
 	public static Timestamp string2time(String strtime){ 
 	       Timestamp ts = Timestamp.valueOf(strtime);
 	       return ts;
 	}
-
+    public static String time2string(Timestamp datime){
+    	String strtime = "";
+    	strtime = datime.toString();
+    	return strtime;
+    }
 	public static void main(String[] args) {
-//		proinsert("abc",1,string2time("2016-12-7 13:14:00"),string2time("2016-12-8 13:14:00"));
-//		prodelete("abc");
-		solinsert(1,1,"AC",10,100,99,string2time("2016-12-7 13:14:00"));
-		proupdate("bde",string2time("2016-12-7 13:14:00"),string2time("2016-12-8 13:14:10"),"abc");
+		proInsert("abc",1,string2time("2016-12-7 13:14:00"),string2time("2016-12-8 13:14:00"));
+//		proDelete("abc");
+	//	solInsert(1,1,"AC",10,100,99,string2time("2016-12-7 13:14:00"));
+//		proUpdate("bde",string2time("2016-12-7 13:14:00"),string2time("2016-12-8 13:14:10"),"abc");
+	//	ProblemAbstract pro = proSearch(1);
+	//	System.out.println(pro.getProName());
+		ArrayList<JudgeResult> sollist = searchMySolution(1);
+		for(int i = 0;i < sollist.size();i++){
+			
+			System.out.print(sollist.get(i).solutionID);
+		}
 		return;
 		
 	}
