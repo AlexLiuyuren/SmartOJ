@@ -1,3 +1,4 @@
+ <%@ page language="java"  pageEncoding="UTF-8"%>
 <!--下面是顶部导航栏的代码-->
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
