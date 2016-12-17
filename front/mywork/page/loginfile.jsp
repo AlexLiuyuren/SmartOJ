@@ -1,3 +1,4 @@
+ <%@ page language="java"  pageEncoding="UTF-8"%>
 <div class="modal fade" tabindex="-1" id = "my_modal"role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
     <div class="modal-content">
