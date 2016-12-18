@@ -9,6 +9,7 @@
 		<li id = "l_myProblem"><a href="myproblem.jsp">我的任务</a></li>
 		<li id = "l_completedProblem"><a href="completed.jsp">完成题目</a></li>
 		<li id = "l_releaseProblem"><a href="releaseproblem.jsp">发布题目</a></li>
+		<li id = "l_rank"><a href="rank.jsp">排行榜</a></li>
 	</ul>
 	<ul class="nav nav-sidebar">
 		<li><a href="#">账户设置</a></li>

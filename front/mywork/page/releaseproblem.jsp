@@ -37,27 +37,27 @@
 						<input type = "text" style = "font-size: 25px; width: 300px; height: 40px" id = "release_pn"></input>
 					<h3>description</h3>
 					<div >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<h3>Input</h3>
 					<div >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<h3>Output</h3>
 					<div >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<h3>Sample Input</h3>
 					<div  >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<h3>Sample Output</h3>
 					<div  >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<h3>Hint</h3>
 					<div  >
-						<textarea rows="9" cols="100" class="textarea_style"></textarea>
+						<textarea rows="9" cols="80" class="textarea_style"></textarea>
 					</div>
 					<div>
 						<button class="btn btn-primary btn-lg">submit</button>
