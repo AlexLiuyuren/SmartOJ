@@ -20,13 +20,13 @@
 
 <body>
 	<!-- 顶部导航栏 -->
-	<%@ include file="header.jsp"%>
+	<%@ include file="component/header.jsp"%>
 	<!-- 模态登录弹出框 -->
-	<%@ include file="loginfile.jsp"%>
+	<%@ include file="component/loginfile.jsp"%>
 	<!--自适应布局-->
 	<div class="container-fluid">
 		<div class="row">
-			<%@ include file="leftnav.jsp"%>
+			<%@ include file="component/leftnav.jsp"%>
 			<!--右侧管理控制台-->
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<!--<h1 class="page-header">管理控制台</h1>-->
@@ -81,7 +81,7 @@
 					</div>
 					<div>
 						<h3>Your Code</h3>
-						<button type="primary" class="btn btn-default btn-lg">submit</button>
+						<button  class="btn btn-primary btn-lg">submit</button>
 						<div>
 							<div>
 								<textarea rows="30" cols="130" class="textarea_style">
@@ -91,9 +91,11 @@
 					</div>
 				</div>
 			</div>
-			<script src="../js/jquery-1.11.1.min.js"></script>
-			<script src="../js/bootstrap.min.js"></script>
-			<!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+		</div>
+	</div>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 </body>
 </html>
